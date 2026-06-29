@@ -21,7 +21,7 @@
             <x-ui.card-header class="space-y-1 text-center">
                 <x-ui.card-title class="text-2xl">Masuk</x-ui.card-title>
                 <p class="text-sm text-muted-foreground">
-                    Masukkan email dan password Anda untuk masuk ke sistem Sales Monitor.
+                    Masukkan email dan password Anda untuk masuk ke sistem.
                 </p>
             </x-ui.card-header>
             <x-ui.card-content>

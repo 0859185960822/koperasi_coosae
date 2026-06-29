@@ -37,9 +37,15 @@
             </x-ui.card-header>
             <x-ui.card-content>
                 <div class="flex justify-center">
-                    <div class="w-full max-w-xs">
-                        <canvas id="pieChart"></canvas>
-                    </div>
+                    @if($totalProspek == 0 && $totalNegosiasi == 0 && $totalCustomerAktif == 0)
+                        <div class="flex items-center justify-center h-48 text-muted-foreground italic">
+                            belum ada data customer
+                        </div>
+                    @else
+                        <div class="w-full max-w-xs">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    @endif
                 </div>
             </x-ui.card-content>
         </x-ui.card>
@@ -58,19 +64,22 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const ctx = document.getElementById('pieChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Prospek Customer', 'Negosiasi', 'Customer Aktif'],
-                datasets: [{
-                    data: [{{ $totalProspek }}, {{ $totalNegosiasi }}, {{ $totalCustomerAktif }}],
-                    backgroundColor: ['#10b981', '#f59e0b', '#0ea5e9'],
-                    borderWidth: 0,
-                }]
-            },
-            options: { responsive: true }
-        });
+        const pieCanvas = document.getElementById('pieChart');
+        if (pieCanvas) {
+            const ctx = pieCanvas.getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Prospek Customer', 'Negosiasi', 'Customer Aktif'],
+                    datasets: [{
+                        data: [{{ $totalProspek }}, {{ $totalNegosiasi }}, {{ $totalCustomerAktif }}],
+                        backgroundColor: ['#10b981', '#f59e0b', '#0ea5e9'],
+                        borderWidth: 0,
+                    }]
+                },
+                options: { responsive: true }
+            });
+        }
 
         const map = L.map('customerMap').setView([-2.5, 118], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);

@@ -1,6 +1,13 @@
 <x-app-layout>
     <x-slot name="header">Customer Aktif</x-slot>
 
+    <div class="flex justify-end mb-4">
+        <form action="{{ route('aktif.index') }}" method="GET" class="flex w-full sm:max-w-sm items-center space-x-2">
+            <x-ui.input type="text" name="search" placeholder="Cari customer..." value="{{ request('search') }}" />
+            <x-ui.button type="submit">Cari</x-ui.button>
+        </form>
+    </div>
+
     <x-ui.card>
         <x-ui.card-content class="pt-6">
             <x-ui.table>
@@ -35,7 +42,20 @@
                     @endforelse
                 </x-ui.table-body>
             </x-ui.table>
-            <div class="mt-4">{{ $customers->links() }}</div>
+            @if($customers->hasPages())
+                <div class="mt-4">{{ $customers->links() }}</div>
+            @else
+                <div class="mt-4 flex flex-col sm:flex-row items-center justify-between px-2 gap-4">
+                    <div class="text-sm text-muted-foreground text-center sm:text-left">
+                        Menampilkan 1 hingga {{ $customers->count() }} dari {{ $customers->total() }} hasil
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <x-ui.button variant="outline" size="sm" disabled>&laquo;</x-ui.button>
+                        <x-ui.button variant="outline" size="sm" class="bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
+                        <x-ui.button variant="outline" size="sm" disabled>&raquo;</x-ui.button>
+                    </div>
+                </div>
+            @endif
         </x-ui.card-content>
     </x-ui.card>
 

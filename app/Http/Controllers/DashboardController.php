@@ -43,8 +43,11 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
+        // Data for map (sebaran customer keseluruhan)
+        $customers = Customer::select('nama', 'lokasi', 'status')->get();
+
         return view('dashboard.manager', compact(
-            'totalSales', 'totalProspek', 'totalNegosiasi', 'totalCustomerAktif', 'topSales'
+            'totalSales', 'totalProspek', 'totalNegosiasi', 'totalCustomerAktif', 'topSales', 'customers'
         ));
     }
 
@@ -53,21 +56,29 @@ class DashboardController extends Controller
         $startDate = $request->get('start', Carbon::now()->subMonths(6)->format('Y-m-d'));
         $endDate = $request->get('end', Carbon::now()->format('Y-m-d'));
 
+        // SQLite version of grouping by month
         $data = Customer::select(
-                DB::raw("DATE_FORMAT(created_at, '%Y-%m') as bulan"),
+                DB::raw("strftime('%Y-%m', created_at) as bulan"),
+                'status',
                 DB::raw('COUNT(*) as total')
             )
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->groupBy('bulan')
+            ->whereIn('status', ['Prospek Customer', 'Negosiasi', 'Customer Aktif'])
+            ->groupBy('bulan', 'status')
             ->orderBy('bulan')
             ->get();
 
         return response()->json($data);
     }
 
-    public function laporanMarketing()
+    public function laporanMarketing(Request $request)
     {
-        $marketings = User::where('role', 'marketing')->get();
+        $query = User::where('role', 'marketing');
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('name', 'like', "%{$search}%");
+        }
+        $marketings = $query->paginate(10)->withQueryString();
         return view('dashboard.laporan_marketing', compact('marketings'));
     }
 }

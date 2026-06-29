@@ -1,6 +1,13 @@
 <x-app-layout>
     <x-slot name="header">Status Perjalanan Customer</x-slot>
 
+    <div class="flex justify-end mb-4">
+        <form action="{{ route('status.index') }}" method="GET" class="flex w-full sm:max-w-sm items-center space-x-2">
+            <x-ui.input type="text" name="search" placeholder="Cari customer..." value="{{ request('search') }}" />
+            <x-ui.button type="submit">Cari</x-ui.button>
+        </form>
+    </div>
+
     <x-ui.card>
         <x-ui.card-content class="pt-6">
             <x-ui.table>
@@ -37,13 +44,26 @@
                     @endforelse
                 </x-ui.table-body>
             </x-ui.table>
-            <div class="mt-4">{{ $customers->links() }}</div>
+            @if($customers->hasPages())
+                <div class="mt-4">{{ $customers->links() }}</div>
+            @else
+                <div class="mt-4 flex flex-col sm:flex-row items-center justify-between px-2 gap-4">
+                    <div class="text-sm text-muted-foreground text-center sm:text-left">
+                        Menampilkan 1 hingga {{ $customers->count() }} dari {{ $customers->total() }} hasil
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <x-ui.button variant="outline" size="sm" disabled>&laquo;</x-ui.button>
+                        <x-ui.button variant="outline" size="sm" class="bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
+                        <x-ui.button variant="outline" size="sm" disabled>&raquo;</x-ui.button>
+                    </div>
+                </div>
+            @endif
         </x-ui.card-content>
     </x-ui.card>
 
     @foreach($customers as $c)
     <x-ui.modal id="modalStatusUpdate{{ $c->id }}" title="Update Status: {{ $c->nama }}">
-        <form action="{{ route('status.update', $c->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4 max-h-[70vh] overflow-y-auto px-1">
+        <form action="{{ route('status.update', $c->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4 max-h-[70vh] overflow-y-auto overflow-x-hidden pr-2">
             @csrf
             
             <div class="space-y-2">

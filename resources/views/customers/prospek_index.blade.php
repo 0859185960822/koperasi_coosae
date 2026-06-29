@@ -26,13 +26,12 @@
                         <x-ui.table-cell class="font-medium">{{ $c->nama }}</x-ui.table-cell>
                         <x-ui.table-cell>{{ $c->product->nama ?? '-' }}</x-ui.table-cell>
                         <x-ui.table-cell>{{ $c->whatsapp }}</x-ui.table-cell>
-                        <x-ui.table-cell class="text-right space-x-1">
-                            <x-ui.button variant="secondary" size="sm" onclick="modalUpdate{{ $c->id }}.showModal()">Update</x-ui.button>
-                            <x-ui.button variant="outline" size="sm" onclick="modalDetail{{ $c->id }}.showModal()">Detail</x-ui.button>
-                            <form action="{{ route('prospek.destroy', $c->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus customer ini?')">
-                                @csrf @method('DELETE')
-                                <x-ui.button variant="destructive" size="sm">Delete</x-ui.button>
-                            </form>
+                        <x-ui.table-cell class="text-right align-top">
+                            <div class="flex flex-col items-end gap-2">
+                                <x-ui.button variant="secondary" size="sm" class="w-20 justify-center" onclick="modalUpdate{{ $c->id }}.showModal()">Update</x-ui.button>
+                                <x-ui.button variant="outline" size="sm" class="w-20 justify-center" onclick="modalDetail{{ $c->id }}.showModal()">Detail</x-ui.button>
+                                <x-ui.button variant="destructive" size="sm" class="w-20 justify-center" onclick="modalDelete{{ $c->id }}.showModal()">Delete</x-ui.button>
+                            </div>
                         </x-ui.table-cell>
                     </x-ui.table-row>
                     @empty
@@ -42,7 +41,20 @@
                     @endforelse
                 </x-ui.table-body>
             </x-ui.table>
-            <div class="mt-4">{{ $customers->links() }}</div>
+            @if($customers->hasPages())
+                <div class="mt-4">{{ $customers->links() }}</div>
+            @else
+                <div class="mt-4 flex flex-col sm:flex-row items-center justify-between px-2 gap-4">
+                    <div class="text-sm text-muted-foreground text-center sm:text-left">
+                        Menampilkan 1 hingga {{ $customers->count() }} dari {{ $customers->total() }} hasil
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <x-ui.button variant="outline" size="sm" disabled>&laquo;</x-ui.button>
+                        <x-ui.button variant="outline" size="sm" class="bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
+                        <x-ui.button variant="outline" size="sm" disabled>&raquo;</x-ui.button>
+                    </div>
+                </div>
+            @endif
         </x-ui.card-content>
     </x-ui.card>
 
@@ -124,6 +136,19 @@
             <div class="grid grid-cols-3 border-b pb-2"><span class="font-semibold">Lokasi:</span> <span class="col-span-2">{{ $c->lokasi }}</span></div>
             <div class="grid grid-cols-3 border-b pb-2"><span class="font-semibold">Status:</span> <span class="col-span-2"><x-ui.badge>{{ $c->status }}</x-ui.badge></span></div>
             <div class="grid grid-cols-3 pb-2"><span class="font-semibold">Keterangan:</span> <span class="col-span-2 text-muted-foreground">{{ $c->keterangan ?? '-' }}</span></div>
+        </div>
+    </x-ui.modal>
+
+    <x-ui.modal id="modalDelete{{ $c->id }}" title="Konfirmasi Hapus">
+        <div class="py-4">
+            <p>Apakah anda yakin menghapus data ini?</p>
+        </div>
+        <div class="flex justify-end gap-2 pt-4">
+            <x-ui.button variant="outline" onclick="modalDelete{{ $c->id }}.close()">Tidak</x-ui.button>
+            <form action="{{ route('prospek.destroy', $c->id) }}" method="POST">
+                @csrf @method('DELETE')
+                <x-ui.button variant="destructive" type="submit">Ya</x-ui.button>
+            </form>
         </div>
     </x-ui.modal>
     @endforeach

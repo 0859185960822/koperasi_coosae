@@ -15,7 +15,7 @@ class CustomerController extends Controller
 
     public function prospekIndex(Request $request)
     {
-        $query = auth()->user()->customers()->with('product');
+        $query = auth()->user()->customers()->with('product')->where('status', '!=', 'Customer Aktif');
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -102,13 +102,22 @@ class CustomerController extends Controller
     // MARKETING: STATUS PERJALANAN
     // ==============================
 
-    public function statusPerjalanan()
+    public function statusPerjalanan(Request $request)
     {
-        $customers = auth()->user()->customers()
+        $query = auth()->user()->customers()
             ->with(['product', 'followups.documents'])
-            ->whereIn('status', ['Prospek Customer', 'Negosiasi', 'Customer Aktif'])
-            ->latest()
-            ->paginate(10);
+            ->whereIn('status', ['Prospek Customer', 'Negosiasi', 'Customer Aktif']);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('whatsapp', 'like', "%{$search}%")
+                  ->orWhere('lokasi', 'like', "%{$search}%");
+            });
+        }
+
+        $customers = $query->latest()->paginate(10)->withQueryString();
         $products = Product::all();
 
         return view('customers.status_perjalanan', compact('customers', 'products'));
@@ -118,13 +127,22 @@ class CustomerController extends Controller
     // MARKETING: CUSTOMER AKTIF
     // ==============================
 
-    public function customerAktif()
+    public function customerAktif(Request $request)
     {
-        $customers = auth()->user()->customers()
+        $query = auth()->user()->customers()
             ->where('status', 'Customer Aktif')
-            ->with(['product', 'followups.documents', 'documents'])
-            ->latest()
-            ->paginate(10);
+            ->with(['product', 'followups.documents', 'documents']);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('whatsapp', 'like', "%{$search}%")
+                  ->orWhere('lokasi', 'like', "%{$search}%");
+            });
+        }
+
+        $customers = $query->latest()->paginate(10)->withQueryString();
 
         return view('customers.customer_aktif', compact('customers'));
     }
