@@ -45,6 +45,30 @@ export default {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                btnTambah: {
+                    DEFAULT: "hsl(var(--btn-tambah))",
+                    foreground: "hsl(var(--btn-tambah-fg))",
+                },
+                btnHistory: {
+                    DEFAULT: "hsl(var(--btn-history))",
+                    foreground: "hsl(var(--btn-history-fg))",
+                },
+                btnSubmit: {
+                    DEFAULT: "hsl(var(--btn-submit))",
+                    foreground: "hsl(var(--btn-submit-fg))",
+                },
+                btnSearch: {
+                    DEFAULT: "hsl(var(--btn-search))",
+                    foreground: "hsl(var(--btn-search-fg))",
+                },
+                btnMasuk: {
+                    DEFAULT: "hsl(var(--btn-masuk))",
+                    foreground: "hsl(var(--btn-masuk-fg))",
+                },
+                btnPaginasi: {
+                    DEFAULT: "hsl(var(--btn-paginasi))",
+                    foreground: "hsl(var(--btn-paginasi-fg))",
+                },
             },
             borderRadius: {
                 lg: "var(--radius)",

@@ -10,6 +10,12 @@ $variants = [
     'secondary' => 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
     'ghost' => 'hover:bg-accent hover:text-accent-foreground',
     'link' => 'text-primary underline-offset-4 hover:underline',
+    'tambah' => 'bg-btnTambah text-btnTambah-foreground hover:bg-btnTambah/90',
+    'history' => 'bg-btnHistory text-btnHistory-foreground hover:bg-btnHistory/90',
+    'submit' => 'bg-btnSubmit text-btnSubmit-foreground hover:bg-btnSubmit/90',
+    'search' => 'bg-btnSearch text-btnSearch-foreground hover:bg-btnSearch/90',
+    'masuk' => 'bg-btnMasuk text-btnMasuk-foreground hover:bg-btnMasuk/90',
+    'paginasi' => 'bg-btnPaginasi text-btnPaginasi-foreground hover:bg-btnPaginasi/90',
 ];
 
 $sizes = [

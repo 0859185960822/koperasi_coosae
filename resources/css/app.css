@@ -64,6 +64,27 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
+
+  /* Custom Button Colors (You can change these values) */
+  :root {
+    --btn-tambah: 142.1 70.6% 45.3%; /* Green */
+    --btn-tambah-fg: 0 0% 100%;
+    
+    --btn-history: 217.2 91.2% 59.8%; /* Blue */
+    --btn-history-fg: 0 0% 100%;
+
+    --btn-submit: 217.2 91.2% 59.8%; /* Blue */
+    --btn-submit-fg: 0 0% 100%;
+
+    --btn-search: 217.2 91.2% 59.8%; /* Blue */
+    --btn-search-fg: 0 0% 100%;
+
+    --btn-masuk: 217.2 91.2% 59.8%; /* Blue */
+    --btn-masuk-fg: 0 0% 100%;
+
+    --btn-paginasi: 217.2 91.2% 59.8%; /* Blue */
+    --btn-paginasi-fg: 0 0% 100%;
+  }
 }
  
 @layer base {

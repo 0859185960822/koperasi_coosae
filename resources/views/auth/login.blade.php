@@ -66,7 +66,7 @@
                         <x-ui.label for="remember_me" class="font-normal">Ingat Saya</x-ui.label>
                     </div>
 
-                    <x-ui.button type="submit" class="w-full">
+                    <x-ui.button variant="masuk" type="submit" class="w-full">
                         Masuk
                     </x-ui.button>
                 </form>

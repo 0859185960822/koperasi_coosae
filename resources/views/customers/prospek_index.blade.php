@@ -2,10 +2,10 @@
     <x-slot name="header">Prospek Customer</x-slot>
 
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-        <x-ui.button onclick="modalTambah.showModal()">+ Tambah Prospek</x-ui.button>
+        <x-ui.button variant="tambah" onclick="modalTambah.showModal()">+ Tambah Prospek</x-ui.button>
         <form action="{{ route('prospek.index') }}" method="GET" class="flex w-full max-w-sm items-center space-x-2">
             <x-ui.input type="text" name="search" placeholder="Cari customer..." value="{{ request('search') }}" />
-            <x-ui.button type="submit">Cari</x-ui.button>
+            <x-ui.button variant="search" type="submit">Cari</x-ui.button>
         </form>
     </div>
 
@@ -50,7 +50,7 @@
                     </div>
                     <div class="flex items-center space-x-1">
                         <x-ui.button variant="outline" size="sm" disabled>&laquo;</x-ui.button>
-                        <x-ui.button variant="outline" size="sm" class="bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm">1</x-ui.button>
                         <x-ui.button variant="outline" size="sm" disabled>&raquo;</x-ui.button>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             </div>
             <div class="space-y-2">
                 <x-ui.label>Produk yang Diminati</x-ui.label>
-                <select name="product_id" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" required>
+                <select name="product_id" class="flex h-10 w-full max-w-full text-ellipsis overflow-hidden rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" required>
                     <option value="" disabled selected>Pilih Produk...</option>
                     @foreach($products as $p)
                         <option value="{{ $p->id }}">{{ $p->nama }}</option>
@@ -88,7 +88,7 @@
                 <textarea name="keterangan" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"></textarea>
             </div>
             <div class="flex justify-end pt-4">
-                <x-ui.button type="submit">Simpan</x-ui.button>
+                <x-ui.button variant="submit" type="submit">Simpan</x-ui.button>
             </div>
         </form>
     </x-ui.modal>
@@ -104,7 +104,7 @@
             </div>
             <div class="space-y-2">
                 <x-ui.label>Produk yang Diminati</x-ui.label>
-                <select name="product_id" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" required>
+                <select name="product_id" class="flex h-10 w-full max-w-full text-ellipsis overflow-hidden rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" required>
                     @foreach($products as $p)
                         <option value="{{ $p->id }}" {{ $c->product_id == $p->id ? 'selected' : '' }}>{{ $p->nama }}</option>
                     @endforeach
@@ -123,7 +123,7 @@
                 <textarea name="keterangan" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{{ $c->keterangan }}</textarea>
             </div>
             <div class="flex justify-end pt-4">
-                <x-ui.button type="submit">Update</x-ui.button>
+                <x-ui.button variant="submit" type="submit">Update</x-ui.button>
             </div>
         </form>
     </x-ui.modal>
@@ -134,7 +134,7 @@
             <div class="grid grid-cols-3 border-b pb-2"><span class="font-semibold">Produk:</span> <span class="col-span-2">{{ $c->product->nama ?? '-' }}</span></div>
             <div class="grid grid-cols-3 border-b pb-2"><span class="font-semibold">No. WA:</span> <span class="col-span-2">{{ $c->whatsapp }}</span></div>
             <div class="grid grid-cols-3 border-b pb-2"><span class="font-semibold">Lokasi:</span> <span class="col-span-2">{{ $c->lokasi }}</span></div>
-            <div class="grid grid-cols-3 border-b pb-2"><span class="font-semibold">Status:</span> <span class="col-span-2"><x-ui.badge>{{ $c->status }}</x-ui.badge></span></div>
+            <div class="grid grid-cols-3 border-b pb-2"><span class="font-semibold">Status:</span> <span class="col-span-2"><x-ui.badge variant="{{ $c->status == 'Customer Aktif' ? 'aktif' : ($c->status == 'Negosiasi' ? 'negosiasi' : 'prospek') }}">{{ $c->status }}</x-ui.badge></span></div>
             <div class="grid grid-cols-3 pb-2"><span class="font-semibold">Keterangan:</span> <span class="col-span-2 text-muted-foreground">{{ $c->keterangan ?? '-' }}</span></div>
         </div>
     </x-ui.modal>

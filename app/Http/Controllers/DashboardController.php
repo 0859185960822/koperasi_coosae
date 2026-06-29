@@ -56,9 +56,13 @@ class DashboardController extends Controller
         $startDate = $request->get('start', Carbon::now()->subMonths(6)->format('Y-m-d'));
         $endDate = $request->get('end', Carbon::now()->format('Y-m-d'));
 
-        // SQLite version of grouping by month
+        $dbDriver = DB::connection()->getDriverName();
+        $dateExpression = $dbDriver === 'sqlite' 
+            ? "strftime('%Y-%m', created_at)" 
+            : "DATE_FORMAT(created_at, '%Y-%m')";
+
         $data = Customer::select(
-                DB::raw("strftime('%Y-%m', created_at) as bulan"),
+                DB::raw("$dateExpression as bulan"),
                 'status',
                 DB::raw('COUNT(*) as total')
             )

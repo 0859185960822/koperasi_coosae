@@ -4,7 +4,7 @@
     <div class="flex justify-end mb-4">
         <form action="{{ route('status.index') }}" method="GET" class="flex w-full sm:max-w-sm items-center space-x-2">
             <x-ui.input type="text" name="search" placeholder="Cari customer..." value="{{ request('search') }}" />
-            <x-ui.button type="submit">Cari</x-ui.button>
+            <x-ui.button variant="search" type="submit">Cari</x-ui.button>
         </form>
     </div>
 
@@ -26,7 +26,7 @@
                         <x-ui.table-cell class="font-medium">{{ $c->nama }}</x-ui.table-cell>
                         <x-ui.table-cell>{{ $c->product->nama ?? '-' }}</x-ui.table-cell>
                         <x-ui.table-cell>
-                            <x-ui.badge variant="{{ $c->status == 'Customer Aktif' ? 'default' : ($c->status == 'Negosiasi' ? 'secondary' : 'outline') }}">
+                            <x-ui.badge variant="{{ $c->status == 'Customer Aktif' ? 'aktif' : ($c->status == 'Negosiasi' ? 'negosiasi' : 'prospek') }}">
                                 {{ $c->status }}
                             </x-ui.badge>
                         </x-ui.table-cell>
@@ -34,7 +34,7 @@
                             <x-ui.button variant="outline" size="sm" onclick="modalStatusUpdate{{ $c->id }}.showModal()">Update</x-ui.button>
                         </x-ui.table-cell>
                         <x-ui.table-cell class="text-right">
-                            <x-ui.button variant="secondary" size="sm" onclick="modalHistory{{ $c->id }}.showModal()">History</x-ui.button>
+                            <x-ui.button variant="history" size="sm" onclick="modalHistory{{ $c->id }}.showModal()">History</x-ui.button>
                         </x-ui.table-cell>
                     </x-ui.table-row>
                     @empty
@@ -53,7 +53,7 @@
                     </div>
                     <div class="flex items-center space-x-1">
                         <x-ui.button variant="outline" size="sm" disabled>&laquo;</x-ui.button>
-                        <x-ui.button variant="outline" size="sm" class="bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm">1</x-ui.button>
                         <x-ui.button variant="outline" size="sm" disabled>&raquo;</x-ui.button>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             
             <div class="space-y-2">
                 <x-ui.label>Status Customer</x-ui.label>
-                <select name="status" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" required>
+                <select name="status" class="flex h-10 w-full max-w-full text-ellipsis overflow-hidden rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" required>
                     @foreach(['Prospek Customer', 'Negosiasi', 'Customer Aktif'] as $status)
                         <option value="{{ $status }}" {{ $c->status == $status ? 'selected' : '' }}>{{ $status }}</option>
                     @endforeach
@@ -76,8 +76,28 @@
             </div>
 
             <div class="space-y-2">
+                <x-ui.label>Produk yang Diminati (Opsional)</x-ui.label>
+                <select name="product_id" class="flex h-10 w-full max-w-full text-ellipsis overflow-hidden rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    <option value="" disabled selected>Pilih Produk (Biarkan kosong jika tidak berubah)...</option>
+                    @foreach($products as $p)
+                        <option value="{{ $p->id }}" {{ $c->product_id == $p->id ? 'selected' : '' }}>{{ $p->nama }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="space-y-2">
+                <x-ui.label>No. WhatsApp (Ubah jika perlu)</x-ui.label>
+                <x-ui.input name="whatsapp" value="{{ $c->whatsapp }}" />
+            </div>
+
+            <div class="space-y-2">
+                <x-ui.label>Lokasi (Ubah jika perlu)</x-ui.label>
+                <x-ui.input name="lokasi" value="{{ $c->lokasi }}" />
+            </div>
+
+            <div class="space-y-2">
                 <x-ui.label>Riwayat Interaksi Marketing</x-ui.label>
-                <select name="jenis_interaksi" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" required>
+                <select name="jenis_interaksi" class="flex h-10 w-full max-w-full text-ellipsis overflow-hidden rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" required>
                     <option value="" disabled selected>Pilih Interaksi...</option>
                     @foreach(['Telepon', 'WA/ Email', 'Meeting', 'Kunjungan Lapangan', 'Presentasi Produk'] as $interaksi)
                         <option value="{{ $interaksi }}">{{ $interaksi }}</option>
@@ -97,7 +117,7 @@
 
             <div class="space-y-2">
                 <x-ui.label>Jenis Dokumen (Opsional)</x-ui.label>
-                <select name="jenis_dokumen" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <select name="jenis_dokumen" class="flex h-10 w-full max-w-full text-ellipsis overflow-hidden rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                     <option value="">Tidak ada dokumen</option>
                     @foreach(['Form Pendaftaran', 'Form Kunjungan', 'Catatan Survey', 'Proposal Kerja Sama', 'Kontrak', 'Dokumen Lainnya'] as $jenis)
                         <option value="{{ $jenis }}">{{ $jenis }}</option>
@@ -111,7 +131,7 @@
             </div>
 
             <div class="flex justify-end pt-4">
-                <x-ui.button type="submit">Update & Simpan</x-ui.button>
+                <x-ui.button variant="submit" type="submit">Update & Simpan</x-ui.button>
             </div>
         </form>
     </x-ui.modal>
@@ -136,7 +156,7 @@
                             <div>{{ $fu->jenis_interaksi }}</div>
                             <div class="text-xs text-muted-foreground mt-1">{{ $fu->keterangan }}</div>
                         </x-ui.table-cell>
-                        <x-ui.table-cell><x-ui.badge variant="outline">{{ $fu->status_saat_itu }}</x-ui.badge></x-ui.table-cell>
+                        <x-ui.table-cell><x-ui.badge variant="{{ $fu->status_saat_itu == 'Customer Aktif' ? 'aktif' : ($fu->status_saat_itu == 'Negosiasi' ? 'negosiasi' : 'prospek') }}">{{ $fu->status_saat_itu }}</x-ui.badge></x-ui.table-cell>
                         <x-ui.table-cell>
                             @forelse($fu->documents as $doc)
                                 <div class="text-xs">{{ $doc->jenis_dokumen }}</div>

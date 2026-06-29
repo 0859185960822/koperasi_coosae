@@ -168,6 +168,19 @@
                         {{ session('error') }}
                     </div>
                 @endif
+                @if($errors->any())
+                    <div class="rounded-md border border-red-200 bg-red-50 p-4 text-red-800 text-sm mb-4">
+                        <div class="flex items-center gap-2 font-semibold mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            Terdapat kesalahan:
+                        </div>
+                        <ul class="list-disc pl-5">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 {{ $slot }}
             </main>

@@ -19,6 +19,9 @@ class FollowupController extends Controller
             'keterangan' => 'nullable|string',
             'jenis_dokumen' => 'nullable|string|required_with:file_dokumen',
             'file_dokumen' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
+            'product_id' => 'nullable|exists:products,id',
+            'whatsapp' => 'nullable|string|unique:customers,whatsapp,' . $customer->id,
+            'lokasi' => 'nullable|string|max:255',
         ]);
 
         $followup = $customer->followups()->create([
@@ -38,11 +41,17 @@ class FollowupController extends Controller
             ]);
         }
 
-        // Update customer status and last followup date
-        $customer->update([
+        // Update customer status, last followup date, and optionally other fields
+        $updateData = [
             'status' => $request->status,
             'last_followup_at' => now(),
-        ]);
+        ];
+        
+        if ($request->filled('product_id')) $updateData['product_id'] = $request->product_id;
+        if ($request->filled('whatsapp')) $updateData['whatsapp'] = $request->whatsapp;
+        if ($request->filled('lokasi')) $updateData['lokasi'] = $request->lokasi;
+
+        $customer->update($updateData);
 
         ActivityLog::create([
             'user_id' => auth()->id(),
