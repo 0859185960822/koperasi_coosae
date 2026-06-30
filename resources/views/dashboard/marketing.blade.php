@@ -73,7 +73,7 @@
                     labels: ['Prospek Customer', 'Negosiasi', 'Customer Aktif'],
                     datasets: [{
                         data: [{{ $totalProspek }}, {{ $totalNegosiasi }}, {{ $totalCustomerAktif }}],
-                        backgroundColor: ['#10b981', '#f59e0b', '#0ea5e9'],
+                        backgroundColor: ['#0ea5e9', '#f59e0b', '#10b981'],
                         borderWidth: 0,
                     }]
                 },

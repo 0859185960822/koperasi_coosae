@@ -99,31 +99,54 @@
             options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
         });
 
-        let prospekChart;
-        function loadProspekChart() {
+        // let prospekChart;
+        let statusChart;
+        // function loadProspekChart() 
+        function loadStatusChart()
+        {
             const start = document.getElementById('startDate').value;
             const end = document.getElementById('endDate').value;
             fetch(`{{ route('manager.api.prospek-chart') }}?start=${start}&end=${end}`)
                 .then(r => r.json())
                 .then(data => {
                     // Extract unique labels (bulan)
-                    const labels = [...new Set(data.map(d => d.bulan))].sort();
+                    // const labels = [...new Set(data.map(d => d.bulan))].sort();
+                    const labels = [...new Set(data.map(d => d.bulan))];
                     
-                    const prospekData = labels.map(label => {
-                        const row = data.find(d => d.bulan === label && d.status === 'Prospek Customer');
-                        return row ? row.total : 0;
-                    });
-                    const negosiasiData = labels.map(label => {
-                        const row = data.find(d => d.bulan === label && d.status === 'Negosiasi');
-                        return row ? row.total : 0;
-                    });
-                    const aktifData = labels.map(label => {
-                        const row = data.find(d => d.bulan === label && d.status === 'Customer Aktif');
-                        return row ? row.total : 0;
-                    });
+                    // const prospekData = labels.map(label => {
+                    //     const row = data.find(d => d.bulan === label && d.status === 'Prospek Customer');
+                    //     return row ? row.total : 0;
+                    // });
+                    // const negosiasiData = labels.map(label => {
+                    //     const row = data.find(d => d.bulan === label && d.status === 'Negosiasi');
+                    //     return row ? row.total : 0;
+                    // });
+                    // const aktifData = labels.map(label => {
+                    //     const row = data.find(d => d.bulan === label && d.status === 'Customer Aktif');
+                    //     return row ? row.total : 0;
+                    // });
+                    const grouped = {};
+                        data.forEach(item => {
+                            if (!grouped[item.status]) {
+                                grouped[item.status] = {};
+                            }
+                            grouped[item.status][item.bulan] = item.total;
+                        });
+                        const prospekData = labels.map(label =>
+                            grouped["Prospek Customer"]?.[label] ?? 0
+                        );
+                        const negosiasiData = labels.map(label =>
+                            grouped["Negosiasi"]?.[label] ?? 0
+                        );
+                        const aktifData = labels.map(label =>
+                            grouped["Customer Aktif"]?.[label] ?? 0
+                        );
 
-                    if (prospekChart) prospekChart.destroy();
-                    prospekChart = new Chart(document.getElementById('prospekChart').getContext('2d'), {
+                    // if (prospekChart) prospekChart.destroy();
+                    // prospekChart = new Chart(document.getElementById('prospekChart').getContext('2d'), 
+                    if (statusChart) statusChart.destroy();
+                    statusChart = new Chart(document.getElementById('prospekChart').getContext('2d'),
+                    {
                         type: 'line',
                         data: {
                             labels: labels,
@@ -151,12 +174,15 @@
                                 }
                             ]
                         },
-                        options: { responsive: true, plugins: { legend: { display: true, position: 'bottom' } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                        // options: { responsive: true, plugins: { legend: { display: true, position: 'bottom' } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                        options: {responsive: true,interaction: {mode: 'index',intersect: false},plugins: {legend: {position: 'bottom'}},scales: {y: {beginAtZero: true,ticks: {stepSize: 1}}}}
                     });
                 });
         }
-        loadProspekChart();
-        document.getElementById('btnFilter').addEventListener('click', loadProspekChart);
+        // loadProspekChart();
+        loadStatusChart();
+        // document.getElementById('btnFilter').addEventListener('click', loadProspekChart);
+        document.getElementById('btnFilter').addEventListener('click', loadStatusChart);
 
         const map = L.map('customerMap').setView([-2.5, 118], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);

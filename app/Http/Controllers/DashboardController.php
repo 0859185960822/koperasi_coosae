@@ -51,14 +51,44 @@ class DashboardController extends Controller
         ));
     }
 
+    // public function prospekChartData(Request $request)
+    // {
+    //     $startDate = $request->get('start', Carbon::now()->subMonths(6)->format('Y-m-d'));
+    //     $endDate = $request->get('end', Carbon::now()->format('Y-m-d'));
+
+    //     $dbDriver = DB::connection()->getDriverName();
+    //     $dateExpression = $dbDriver === 'sqlite' 
+    //         ? "strftime('%Y-%m', created_at)" 
+    //         : "DATE_FORMAT(created_at, '%Y-%m')";
+
+    //     $data = Customer::select(
+    //             DB::raw("$dateExpression as bulan"),
+    //             'status',
+    //             DB::raw('COUNT(*) as total')
+    //         )
+    //         ->whereBetween('created_at', [$startDate, $endDate])
+    //         ->whereIn('status', ['Prospek Customer', 'Negosiasi', 'Customer Aktif'])
+    //         ->groupBy('bulan', 'status')
+    //         ->orderBy('bulan')
+    //         ->get();
+
+    //     return response()->json($data);
+    // }
+
     public function prospekChartData(Request $request)
     {
-        $startDate = $request->get('start', Carbon::now()->subMonths(6)->format('Y-m-d'));
-        $endDate = $request->get('end', Carbon::now()->format('Y-m-d'));
+        $startDate = Carbon::parse(
+            $request->get('start', now()->subMonths(6))
+        )->startOfDay();
+
+        $endDate = Carbon::parse(
+            $request->get('end', now())
+        )->endOfDay();
 
         $dbDriver = DB::connection()->getDriverName();
-        $dateExpression = $dbDriver === 'sqlite' 
-            ? "strftime('%Y-%m', created_at)" 
+
+        $dateExpression = $dbDriver === 'sqlite'
+            ? "strftime('%Y-%m', created_at)"
             : "DATE_FORMAT(created_at, '%Y-%m')";
 
         $data = Customer::select(
@@ -67,7 +97,11 @@ class DashboardController extends Controller
                 DB::raw('COUNT(*) as total')
             )
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->whereIn('status', ['Prospek Customer', 'Negosiasi', 'Customer Aktif'])
+            ->whereIn('status', [
+                'Prospek Customer',
+                'Negosiasi',
+                'Customer Aktif'
+            ])
             ->groupBy('bulan', 'status')
             ->orderBy('bulan')
             ->get();
