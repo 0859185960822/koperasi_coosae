@@ -100,7 +100,7 @@
         
         @if($c->documents->isNotEmpty())
         <div class="flex justify-end pt-2">
-            <x-ui.button href="{{ route('manager.customers.download-zip', $c->id) }}">Unduh Semua Dokumen (ZIP)</x-ui.button>
+            <x-ui.button variant="paginasi" href="{{ route('manager.customers.download-zip', $c->id) }}">Unduh Semua Dokumen (ZIP)</x-ui.button>
         </div>
         @endif
     </x-ui.modal>

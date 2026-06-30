@@ -68,7 +68,7 @@
             @endforeach
         </ul>
         <div class="flex justify-end">
-            <x-ui.button href="{{ route('customers.download-zip', $c->id) }}">Unduh Semua (ZIP)</x-ui.button>
+            <x-ui.button variant="paginasi" href="{{ route('customers.download-zip', $c->id) }}">Unduh Semua (ZIP)</x-ui.button>
         </div>
     </x-ui.modal>
 
