@@ -63,7 +63,7 @@
 
     @foreach($customers as $c)
     <x-ui.modal id="modalStatusUpdate{{ $c->id }}" title="Update Status: {{ $c->nama }}">
-        <form action="{{ route('status.update', $c->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4 max-h-[70vh] overflow-y-auto overflow-x-hidden pr-2">
+        <form action="{{ route('status.update', $c->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
             @csrf
             
             <div class="space-y-2">
