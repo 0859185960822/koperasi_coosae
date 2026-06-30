@@ -45,10 +45,10 @@
             </x-ui.card-header>
             <x-ui.card-content>
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 mb-4">
-                    <div class="flex items-center gap-2 w-full sm:w-auto">
-                        <x-ui.input type="date" id="startDate" value="{{ now()->subMonths(6)->format('Y-m-d') }}" class="w-full sm:w-auto h-8 text-xs" />
+                    <div class="flex flex-1 items-center gap-2 w-full sm:w-auto">
+                        <x-ui.input type="date" id="startDate" value="{{ now()->subMonths(6)->format('Y-m-d') }}" class="flex-1 w-full sm:w-auto h-8 text-xs" />
                         <span class="text-muted-foreground text-sm">-</span>
-                        <x-ui.input type="date" id="endDate" value="{{ now()->format('Y-m-d') }}" class="w-full sm:w-auto h-8 text-xs" />
+                        <x-ui.input type="date" id="endDate" value="{{ now()->format('Y-m-d') }}" class="flex-1 w-full sm:w-auto h-8 text-xs" />
                     </div>
                     <x-ui.button variant="submit" id="btnFilter" size="sm" class="h-8 w-full sm:w-auto">Filter</x-ui.button>
                 </div>
