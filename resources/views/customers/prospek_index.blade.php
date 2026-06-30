@@ -2,7 +2,7 @@
     <x-slot name="header">Prospek Customer</x-slot>
 
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-        <x-ui.button variant="tambah" onclick="modalTambah.showModal()" class="flex w-full max-w-sm">+ Tambah Prospek</x-ui.button>
+        <x-ui.button variant="tambah" onclick="modalTambah.showModal()" class="w-full sm:w-auto">+ Tambah Prospek</x-ui.button>
         <form action="{{ route('prospek.index') }}" method="GET" class="flex w-full max-w-sm items-center space-x-2">
             <x-ui.input type="text" name="search" placeholder="Cari customer..." value="{{ request('search') }}" />
             <x-ui.button variant="search" type="submit">Cari</x-ui.button>
