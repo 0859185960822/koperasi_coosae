@@ -24,7 +24,16 @@
                         <x-ui.table-cell class="font-medium">{{ $c->nama }}</x-ui.table-cell>
                         <x-ui.table-cell>{{ $c->product->nama ?? '-' }}</x-ui.table-cell>
                         <x-ui.table-cell>
-                            <x-ui.badge variant="{{ $c->status == 'Negosiasi' ? 'secondary' : 'default' }}">{{ $c->status }}</x-ui.badge>
+                            <!-- <x-ui.badge variant="{{ $c->status == 'Negosiasi' ? 'secondary' : 'default' }}">{{ $c->status }}</x-ui.badge> -->
+                             <x-ui.badge
+                                variant="{{ match($c->status) {
+                                    'Customer Aktif' => 'aktif',
+                                    'Negosiasi' => 'negosiasi',
+                                    'Prospek Customer' => 'prospek',
+                                    default => 'default',
+                                } }}">
+                                {{ $c->status }}
+                            </x-ui.badge>
                         </x-ui.table-cell>
                         <x-ui.table-cell class="text-right">
                             <x-ui.button variant="history" size="sm" onclick="mProspek{{ $c->id }}.showModal()">Lihat History</x-ui.button>
