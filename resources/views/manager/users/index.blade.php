@@ -2,10 +2,10 @@
     <x-slot name="header">Manajemen User Marketing</x-slot>
 
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-        <x-ui.button onclick="modalTambahUser.showModal()" class="w-full sm:w-auto">+ Tambah User</x-ui.button>
+        <x-ui.button variant="tambah" onclick="modalTambahUser.showModal()" class="w-full sm:w-auto">+ Tambah User</x-ui.button>
         <form action="{{ route('manager.users.index') }}" method="GET" class="flex w-full sm:max-w-sm items-center space-x-2">
             <x-ui.input type="text" name="search" placeholder="Cari user..." value="{{ request('search') }}" />
-            <x-ui.button type="submit">Cari</x-ui.button>
+            <x-ui.button variant="submit" type="submit">Cari</x-ui.button>
         </form>
     </div>
 
@@ -27,7 +27,7 @@
                             <x-ui.table-cell>{{ $user->email }}</x-ui.table-cell>
                             <x-ui.table-cell>{{ $user->created_at->format('d M Y') }}</x-ui.table-cell>
                             <x-ui.table-cell class="text-right space-x-2">
-                                <x-ui.button variant="outline" size="sm" onclick="modalEditUser{{ $user->id }}.showModal()">Edit</x-ui.button>
+                                <x-ui.button variant="update" size="sm" onclick="modalEditUser{{ $user->id }}.showModal()">Edit</x-ui.button>
                                 <form action="{{ route('manager.users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus user ini?')">
                                     @csrf @method('DELETE')
                                     <x-ui.button variant="destructive" size="sm" type="submit">Delete</x-ui.button>
@@ -50,9 +50,9 @@
                         Menampilkan 1 hingga {{ $users->count() }} dari {{ $users->total() }} hasil
                     </div>
                     <div class="flex items-center space-x-1">
-                        <x-ui.button variant="outline" size="sm" disabled>&laquo;</x-ui.button>
-                        <x-ui.button variant="outline" size="sm" class="bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
-                        <x-ui.button variant="outline" size="sm" disabled>&raquo;</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm" disabled>&laquo;</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm" class="hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm" disabled>&raquo;</x-ui.button>
                     </div>
                 </div>
             @endif
@@ -99,7 +99,7 @@
                     <x-ui.input type="password" name="password" placeholder="Kosongkan jika tidak ingin diubah" minlength="8" />
                 </div>
                 <div class="flex justify-end pt-4">
-                    <x-ui.button type="submit">Update</x-ui.button>
+                    <x-ui.button variant="update" type="submit">Update</x-ui.button>
                 </div>
             </form>
         </x-ui.modal>

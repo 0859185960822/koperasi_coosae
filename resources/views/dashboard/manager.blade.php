@@ -50,7 +50,7 @@
                         <span class="text-muted-foreground text-sm">-</span>
                         <x-ui.input type="date" id="endDate" value="{{ now()->format('Y-m-d') }}" class="w-full sm:w-auto h-8 text-xs" />
                     </div>
-                    <x-ui.button id="btnFilter" size="sm" class="h-8 w-full sm:w-auto">Filter</x-ui.button>
+                    <x-ui.button variant="submit" id="btnFilter" size="sm" class="h-8 w-full sm:w-auto">Filter</x-ui.button>
                 </div>
                 <canvas id="prospekChart"></canvas>
             </x-ui.card-content>

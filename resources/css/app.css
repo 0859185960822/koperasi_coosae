@@ -84,6 +84,9 @@
 
     --btn-paginasi: 217.2 91.2% 59.8%; /* Blue */
     --btn-paginasi-fg: 0 0% 100%;
+
+    --btn-update: 48 96% 53%; /* Yellow */
+    --btn-update-fg: 0 0% 100%; /* Teks gelap */
   }
 }
  

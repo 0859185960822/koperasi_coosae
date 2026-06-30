@@ -2,7 +2,7 @@
     <x-slot name="header">Data Prospek Customer: {{ $user->name }}</x-slot>
 
     <div class="mb-4">
-        <x-ui.button variant="outline" size="sm" href="{{ route('manager.laporan') }}">
+        <x-ui.button variant="paginasi" size="sm" href="{{ route('manager.laporan') }}">
             &larr; Kembali ke Laporan Marketing
         </x-ui.button>
     </div>
@@ -27,7 +27,7 @@
                             <x-ui.badge variant="{{ $c->status == 'Negosiasi' ? 'secondary' : 'default' }}">{{ $c->status }}</x-ui.badge>
                         </x-ui.table-cell>
                         <x-ui.table-cell class="text-right">
-                            <x-ui.button variant="outline" size="sm" onclick="mProspek{{ $c->id }}.showModal()">Lihat History</x-ui.button>
+                            <x-ui.button variant="history" size="sm" onclick="mProspek{{ $c->id }}.showModal()">Lihat History</x-ui.button>
                         </x-ui.table-cell>
                     </x-ui.table-row>
                     @empty

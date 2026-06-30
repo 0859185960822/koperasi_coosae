@@ -4,7 +4,7 @@
     <div class="flex justify-end mb-4">
         <form action="{{ route('aktif.index') }}" method="GET" class="flex w-full sm:max-w-sm items-center space-x-2">
             <x-ui.input type="text" name="search" placeholder="Cari customer..." value="{{ request('search') }}" />
-            <x-ui.button type="submit">Cari</x-ui.button>
+            <x-ui.button variant="search" type="submit">Cari</x-ui.button>
         </form>
     </div>
 
@@ -32,7 +32,7 @@
                             @endif
                         </x-ui.table-cell>
                         <x-ui.table-cell class="text-right">
-                            <x-ui.button variant="outline" size="sm" onclick="modalHistAktif{{ $c->id }}.showModal()">History</x-ui.button>
+                            <x-ui.button variant="history" size="sm" onclick="modalHistAktif{{ $c->id }}.showModal()">History</x-ui.button>
                         </x-ui.table-cell>
                     </x-ui.table-row>
                     @empty
@@ -50,9 +50,9 @@
                         Menampilkan 1 hingga {{ $customers->count() }} dari {{ $customers->total() }} hasil
                     </div>
                     <div class="flex items-center space-x-1">
-                        <x-ui.button variant="outline" size="sm" disabled>&laquo;</x-ui.button>
-                        <x-ui.button variant="outline" size="sm" class="bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
-                        <x-ui.button variant="outline" size="sm" disabled>&raquo;</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm" disabled>&laquo;</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm" class="hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm" disabled>&raquo;</x-ui.button>
                     </div>
                 </div>
             @endif

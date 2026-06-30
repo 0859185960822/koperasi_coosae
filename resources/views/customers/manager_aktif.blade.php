@@ -2,7 +2,7 @@
     <x-slot name="header">Data Customer Aktif: {{ $user->name }}</x-slot>
 
     <div class="mb-4">
-        <x-ui.button variant="outline" size="sm" href="{{ route('manager.laporan') }}">
+        <x-ui.button variant="paginasi" size="sm" href="{{ route('manager.laporan') }}">
             &larr; Kembali ke Laporan Marketing
         </x-ui.button>
     </div>

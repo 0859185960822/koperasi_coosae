@@ -16,6 +16,7 @@ $variants = [
     'search' => 'bg-btnSearch text-btnSearch-foreground hover:bg-btnSearch/90',
     'masuk' => 'bg-btnMasuk text-btnMasuk-foreground hover:bg-btnMasuk/90',
     'paginasi' => 'bg-btnPaginasi text-btnPaginasi-foreground hover:bg-btnPaginasi/90',
+    'update' => 'bg-btnUpdate text-btnUpdate-foreground hover:bg-btnUpdate/90',
 ];
 
 $sizes = [

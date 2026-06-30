@@ -69,6 +69,10 @@ export default {
                     DEFAULT: "hsl(var(--btn-paginasi))",
                     foreground: "hsl(var(--btn-paginasi-fg))",
                 },
+                btnUpdate: {
+                    DEFAULT: "hsl(var(--btn-update))",
+                    foreground: "hsl(var(--btn-update-fg))",
+                },
             },
             borderRadius: {
                 lg: "var(--radius)",

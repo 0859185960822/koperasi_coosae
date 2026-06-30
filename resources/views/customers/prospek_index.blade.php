@@ -28,8 +28,8 @@
                         <x-ui.table-cell>{{ $c->whatsapp }}</x-ui.table-cell>
                         <x-ui.table-cell class="text-right align-top">
                             <div class="flex flex-col items-end gap-2">
-                                <x-ui.button variant="secondary" size="sm" class="w-20 justify-center" onclick="modalUpdate{{ $c->id }}.showModal()">Update</x-ui.button>
-                                <x-ui.button variant="outline" size="sm" class="w-20 justify-center" onclick="modalDetail{{ $c->id }}.showModal()">Detail</x-ui.button>
+                                <x-ui.button variant="update" size="sm" class="w-20 justify-center" onclick="modalUpdate{{ $c->id }}.showModal()">Update</x-ui.button>
+                                <x-ui.button variant="submit" size="sm" class="w-20 justify-center" onclick="modalDetail{{ $c->id }}.showModal()">Detail</x-ui.button>
                                 <x-ui.button variant="destructive" size="sm" class="w-20 justify-center" onclick="modalDelete{{ $c->id }}.showModal()">Delete</x-ui.button>
                             </div>
                         </x-ui.table-cell>
@@ -88,7 +88,7 @@
                 <textarea name="keterangan" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"></textarea>
             </div>
             <div class="flex justify-end pt-4">
-                <x-ui.button variant="submit" type="submit">Simpan</x-ui.button>
+                <x-ui.button variant="tambah" type="submit">Simpan</x-ui.button>
             </div>
         </form>
     </x-ui.modal>
@@ -123,7 +123,7 @@
                 <textarea name="keterangan" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{{ $c->keterangan }}</textarea>
             </div>
             <div class="flex justify-end pt-4">
-                <x-ui.button variant="submit" type="submit">Update</x-ui.button>
+                <x-ui.button variant="update" type="submit">Update</x-ui.button>
             </div>
         </form>
     </x-ui.modal>

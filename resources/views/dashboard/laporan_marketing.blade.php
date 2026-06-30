@@ -4,7 +4,7 @@
     <div class="flex justify-end mb-4">
         <form action="{{ route('manager.laporan') }}" method="GET" class="flex w-full sm:max-w-sm items-center space-x-2">
             <x-ui.input type="text" name="search" placeholder="Cari marketing..." value="{{ request('search') }}" />
-            <x-ui.button type="submit">Cari</x-ui.button>
+            <x-ui.button variant="search" type="submit">Cari</x-ui.button>
         </form>
     </div>
 
@@ -23,10 +23,10 @@
                     <x-ui.table-row>
                         <x-ui.table-cell class="font-medium">{{ $m->name }}</x-ui.table-cell>
                         <x-ui.table-cell class="text-right">
-                            <x-ui.button variant="outline" size="sm" href="{{ route('manager.marketing.prospek', $m->id) }}">Lihat Detail Prospek</x-ui.button>
+                            <x-ui.button variant="history" size="sm" href="{{ route('manager.marketing.prospek', $m->id) }}">Lihat Detail Prospek</x-ui.button>
                         </x-ui.table-cell>
                         <x-ui.table-cell class="text-right">
-                            <x-ui.button variant="secondary" size="sm" href="{{ route('manager.marketing.aktif', $m->id) }}">Lihat Detail Aktif</x-ui.button>
+                            <x-ui.button variant="history" size="sm" href="{{ route('manager.marketing.aktif', $m->id) }}">Lihat Detail Aktif</x-ui.button>
                         </x-ui.table-cell>
                     </x-ui.table-row>
                     @empty
@@ -44,9 +44,9 @@
                         Menampilkan 1 hingga {{ $marketings->count() }} dari {{ $marketings->total() }} hasil
                     </div>
                     <div class="flex items-center space-x-1">
-                        <x-ui.button variant="outline" size="sm" disabled>&laquo;</x-ui.button>
-                        <x-ui.button variant="outline" size="sm" class="bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
-                        <x-ui.button variant="outline" size="sm" disabled>&raquo;</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm" disabled>&laquo;</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm" class="hover:bg-primary hover:text-primary-foreground">1</x-ui.button>
+                        <x-ui.button variant="paginasi" size="sm" disabled>&raquo;</x-ui.button>
                     </div>
                 </div>
             @endif

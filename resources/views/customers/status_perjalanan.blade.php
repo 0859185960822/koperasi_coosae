@@ -31,7 +31,7 @@
                             </x-ui.badge>
                         </x-ui.table-cell>
                         <x-ui.table-cell class="text-right">
-                            <x-ui.button variant="outline" size="sm" onclick="modalStatusUpdate{{ $c->id }}.showModal()">Update</x-ui.button>
+                            <x-ui.button variant="update" size="sm" onclick="modalStatusUpdate{{ $c->id }}.showModal()">Update</x-ui.button>
                         </x-ui.table-cell>
                         <x-ui.table-cell class="text-right">
                             <x-ui.button variant="history" size="sm" onclick="modalHistory{{ $c->id }}.showModal()">History</x-ui.button>
@@ -131,7 +131,7 @@
             </div>
 
             <div class="flex justify-end pt-4">
-                <x-ui.button variant="submit" type="submit">Update & Simpan</x-ui.button>
+                <x-ui.button variant="update" type="submit">Update & Simpan</x-ui.button>
             </div>
         </form>
     </x-ui.modal>
