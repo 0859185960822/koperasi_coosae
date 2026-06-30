@@ -81,6 +81,7 @@
                         <x-ui.table-head>Tanggal</x-ui.table-head>
                         <x-ui.table-head>Interaksi</x-ui.table-head>
                         <x-ui.table-head>Status</x-ui.table-head>
+                        <x-ui.table-head>Dokumen</x-ui.table-head>
                     </x-ui.table-row>
                 </x-ui.table-header>
                 <x-ui.table-body>
@@ -91,7 +92,25 @@
                             <div>{{ $fu->jenis_interaksi }}</div>
                             <div class="text-xs text-muted-foreground mt-1">{{ $fu->keterangan }}</div>
                         </x-ui.table-cell>
-                        <x-ui.table-cell><x-ui.badge variant="outline">{{ $fu->status_saat_itu }}</x-ui.badge></x-ui.table-cell>
+                        <x-ui.table-cell>
+                            <!-- <x-ui.badge variant="outline">{{ $fu->status_saat_itu }}</x-ui.badge> -->
+                            <x-ui.badge
+                                variant="{{ match($fu->status_saat_itu) {
+                                    'Customer Aktif' => 'aktif',
+                                    'Negosiasi' => 'negosiasi',
+                                    'Prospek Customer' => 'prospek',
+                                    default => 'default',
+                                } }}">
+                                {{ $fu->status_saat_itu }}
+                            </x-ui.badge>
+                        </x-ui.table-cell>
+                        <x-ui.table-cell>
+                                @forelse($fu->documents as $doc)
+                                    <div class="text-xs">{{ $doc->jenis_dokumen }}</div>
+                                @empty
+                                    <span class="text-muted-foreground">-</span>
+                                @endforelse
+                        </x-ui.table-cell>
                     </x-ui.table-row>
                     @empty
                     <x-ui.table-row>
