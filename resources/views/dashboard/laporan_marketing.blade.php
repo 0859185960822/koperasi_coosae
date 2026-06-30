@@ -14,18 +14,18 @@
                 <x-ui.table-header>
                     <x-ui.table-row>
                         <x-ui.table-head>Marketing</x-ui.table-head>
-                        <x-ui.table-head class="text-right">Data Prospek Customer</x-ui.table-head>
-                        <x-ui.table-head class="text-right">Data Customer Aktif</x-ui.table-head>
+                        <x-ui.table-head class="text-center">Data Prospek Customer</x-ui.table-head>
+                        <x-ui.table-head class="text-center">Data Customer Aktif</x-ui.table-head>
                     </x-ui.table-row>
                 </x-ui.table-header>
                 <x-ui.table-body>
                     @forelse($marketings as $m)
                     <x-ui.table-row>
                         <x-ui.table-cell class="font-medium">{{ $m->name }}</x-ui.table-cell>
-                        <x-ui.table-cell class="text-right">
+                        <x-ui.table-cell class="text-center">
                             <x-ui.button variant="history" size="sm" href="{{ route('manager.marketing.prospek', $m->id) }}">Lihat Detail Prospek</x-ui.button>
                         </x-ui.table-cell>
-                        <x-ui.table-cell class="text-right">
+                        <x-ui.table-cell class="text-center">
                             <x-ui.button variant="history" size="sm" href="{{ route('manager.marketing.aktif', $m->id) }}">Lihat Detail Aktif</x-ui.button>
                         </x-ui.table-cell>
                     </x-ui.table-row>

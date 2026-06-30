@@ -15,7 +15,7 @@
                         <x-ui.table-head>Nama Customer</x-ui.table-head>
                         <x-ui.table-head>Produk Diminati</x-ui.table-head>
                         <x-ui.table-head>Status</x-ui.table-head>
-                        <x-ui.table-head class="text-right">History Follow Up</x-ui.table-head>
+                        <x-ui.table-head class="text-center">History Follow Up</x-ui.table-head>
                     </x-ui.table-row>
                 </x-ui.table-header>
                 <x-ui.table-body>
@@ -35,7 +35,7 @@
                                 {{ $c->status }}
                             </x-ui.badge>
                         </x-ui.table-cell>
-                        <x-ui.table-cell class="text-right">
+                        <x-ui.table-cell class="text-center">
                             <x-ui.button variant="history" size="sm" onclick="mProspek{{ $c->id }}.showModal()">Lihat History</x-ui.button>
                         </x-ui.table-cell>
                     </x-ui.table-row>

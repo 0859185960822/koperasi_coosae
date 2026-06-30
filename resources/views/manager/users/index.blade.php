@@ -17,7 +17,7 @@
                         <x-ui.table-head>Nama</x-ui.table-head>
                         <x-ui.table-head>Email</x-ui.table-head>
                         <x-ui.table-head>Tanggal Dibuat</x-ui.table-head>
-                        <x-ui.table-head class="text-right">Aksi</x-ui.table-head>
+                        <x-ui.table-head class="text-center">Aksi</x-ui.table-head>
                     </x-ui.table-row>
                 </x-ui.table-header>
                 <x-ui.table-body>
@@ -26,7 +26,7 @@
                             <x-ui.table-cell class="font-medium">{{ $user->name }}</x-ui.table-cell>
                             <x-ui.table-cell>{{ $user->email }}</x-ui.table-cell>
                             <x-ui.table-cell>{{ $user->created_at->format('d M Y') }}</x-ui.table-cell>
-                            <x-ui.table-cell class="flex flex-col items-end gap-2">
+                            <x-ui.table-cell class="flex flex-col items-center gap-2">
                                 <x-ui.button variant="update" size="sm" class="w-20" onclick="modalEditUser{{ $user->id }}.showModal()">Update</x-ui.button>
                                 <form action="{{ route('manager.users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus user ini?')">
                                     @csrf @method('DELETE')

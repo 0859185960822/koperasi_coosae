@@ -14,8 +14,8 @@
                     <x-ui.table-row>
                         <x-ui.table-head>Nama Customer</x-ui.table-head>
                         <x-ui.table-head>Produk Diminati</x-ui.table-head>
-                        <x-ui.table-head class="text-right">Download Dokumen</x-ui.table-head>
-                        <x-ui.table-head class="text-right">History</x-ui.table-head>
+                        <x-ui.table-head class="text-center">Download Dokumen</x-ui.table-head>
+                        <x-ui.table-head class="text-center">History</x-ui.table-head>
                     </x-ui.table-row>
                 </x-ui.table-header>
                 <x-ui.table-body>
@@ -23,14 +23,14 @@
                     <x-ui.table-row>
                         <x-ui.table-cell class="font-medium">{{ $c->nama }}</x-ui.table-cell>
                         <x-ui.table-cell>{{ $c->product->nama ?? '-' }}</x-ui.table-cell>
-                        <x-ui.table-cell class="text-right">
+                        <x-ui.table-cell class="text-center">
                             @if($c->documents->isNotEmpty())
                             <x-ui.button variant="secondary" size="sm" onclick="mDocs{{ $c->id }}.showModal()">Dokumen ({{ $c->documents->count() }})</x-ui.button>
                             @else
                             <span class="text-xs text-muted-foreground">Tidak ada</span>
                             @endif
                         </x-ui.table-cell>
-                        <x-ui.table-cell class="text-right">
+                        <x-ui.table-cell class="text-center">
                             <x-ui.button variant="history" size="sm" onclick="mHist{{ $c->id }}.showModal()">History</x-ui.button>
                         </x-ui.table-cell>
                     </x-ui.table-row>
