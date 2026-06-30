@@ -8,7 +8,7 @@
                 <x-ui.card-title class="text-sm font-medium">Prospek Customer</x-ui.card-title>
             </x-ui.card-header>
             <x-ui.card-content>
-                <div class="text-2xl font-bold">{{ $totalProspek }}</div>
+                <div class="text-2xl font-bold text-center">{{ $totalProspek }}</div>
             </x-ui.card-content>
         </x-ui.card>
         <x-ui.card>
@@ -16,7 +16,7 @@
                 <x-ui.card-title class="text-sm font-medium">Negosiasi</x-ui.card-title>
             </x-ui.card-header>
             <x-ui.card-content>
-                <div class="text-2xl font-bold">{{ $totalNegosiasi }}</div>
+                <div class="text-2xl font-bold text-center">{{ $totalNegosiasi }}</div>
             </x-ui.card-content>
         </x-ui.card>
         <x-ui.card>
@@ -24,7 +24,7 @@
                 <x-ui.card-title class="text-sm font-medium">Customer Aktif</x-ui.card-title>
             </x-ui.card-header>
             <x-ui.card-content>
-                <div class="text-2xl font-bold">{{ $totalCustomerAktif }}</div>
+                <div class="text-2xl font-bold text-center">{{ $totalCustomerAktif }}</div>
             </x-ui.card-content>
         </x-ui.card>
     </div>

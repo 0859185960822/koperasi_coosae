@@ -17,7 +17,7 @@
                         <x-ui.table-head>Nama Customer</x-ui.table-head>
                         <x-ui.table-head>Produk Diminati</x-ui.table-head>
                         <x-ui.table-head>No. WA</x-ui.table-head>
-                        <x-ui.table-head class="text-right">Opsi</x-ui.table-head>
+                        <x-ui.table-head class="text-center">Opsi</x-ui.table-head>
                     </x-ui.table-row>
                 </x-ui.table-header>
                 <x-ui.table-body>
@@ -27,7 +27,7 @@
                         <x-ui.table-cell>{{ $c->product->nama ?? '-' }}</x-ui.table-cell>
                         <x-ui.table-cell>{{ $c->whatsapp }}</x-ui.table-cell>
                         <x-ui.table-cell class="text-right align-top">
-                            <div class="flex flex-col items-end gap-2">
+                            <div class="flex flex-col items-center gap-2">
                                 <x-ui.button variant="update" size="sm" class="w-20 justify-center" onclick="modalUpdate{{ $c->id }}.showModal()">Update</x-ui.button>
                                 <x-ui.button variant="submit" size="sm" class="w-20 justify-center" onclick="modalDetail{{ $c->id }}.showModal()">Detail</x-ui.button>
                                 <x-ui.button variant="destructive" size="sm" class="w-20 justify-center" onclick="modalDelete{{ $c->id }}.showModal()">Delete</x-ui.button>
