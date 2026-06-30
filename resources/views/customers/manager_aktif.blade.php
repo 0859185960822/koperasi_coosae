@@ -31,7 +31,7 @@
                             @endif
                         </x-ui.table-cell>
                         <x-ui.table-cell class="text-right">
-                            <x-ui.button variant="outline" size="sm" onclick="mHist{{ $c->id }}.showModal()">History</x-ui.button>
+                            <x-ui.button variant="history" size="sm" onclick="mHist{{ $c->id }}.showModal()">History</x-ui.button>
                         </x-ui.table-cell>
                     </x-ui.table-row>
                     @empty
@@ -68,6 +68,7 @@
                         <x-ui.table-head>Tanggal</x-ui.table-head>
                         <x-ui.table-head>Interaksi</x-ui.table-head>
                         <x-ui.table-head>Status</x-ui.table-head>
+                        <x-ui.table-head>Dokumen</x-ui.table-head>
                     </x-ui.table-row>
                 </x-ui.table-header>
                 <x-ui.table-body>
@@ -75,7 +76,25 @@
                     <x-ui.table-row>
                         <x-ui.table-cell class="whitespace-nowrap">{{ $fu->tanggal_interaksi->format('d M Y') }}</x-ui.table-cell>
                         <x-ui.table-cell>{{ $fu->jenis_interaksi }}</x-ui.table-cell>
-                        <x-ui.table-cell><x-ui.badge variant="outline">{{ $fu->status_saat_itu }}</x-ui.badge></x-ui.table-cell>
+                        <x-ui.table-cell>
+                            <!-- <x-ui.badge variant="outline">{{ $fu->status_saat_itu }}</x-ui.badge> -->
+                            <x-ui.badge
+                                variant="{{ match($fu->status_saat_itu) {
+                                    'Customer Aktif' => 'aktif',
+                                    'Negosiasi' => 'negosiasi',
+                                    'Prospek Customer' => 'prospek',
+                                    default => 'default',
+                                } }}">
+                                {{ $fu->status_saat_itu }}
+                            </x-ui.badge>
+                            <x-ui.table-cell>
+                                @forelse($fu->documents as $doc)
+                                    <div class="text-xs">{{ $doc->jenis_dokumen }}</div>
+                                @empty
+                                    <span class="text-muted-foreground">-</span>
+                                @endforelse
+                            </x-ui.table-cell>
+                        </x-ui.table-cell>
                     </x-ui.table-row>
                     @empty
                     <x-ui.table-row>

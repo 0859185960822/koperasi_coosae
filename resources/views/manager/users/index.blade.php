@@ -26,8 +26,8 @@
                             <x-ui.table-cell class="font-medium">{{ $user->name }}</x-ui.table-cell>
                             <x-ui.table-cell>{{ $user->email }}</x-ui.table-cell>
                             <x-ui.table-cell>{{ $user->created_at->format('d M Y') }}</x-ui.table-cell>
-                            <x-ui.table-cell class="text-right space-x-2">
-                                <x-ui.button variant="update" size="sm" onclick="modalEditUser{{ $user->id }}.showModal()">Edit</x-ui.button>
+                            <x-ui.table-cell class="flex flex-col items-end gap-2">
+                                <x-ui.button variant="update" size="sm" onclick="modalEditUser{{ $user->id }}.showModal()">Update</x-ui.button>
                                 <form action="{{ route('manager.users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus user ini?')">
                                     @csrf @method('DELETE')
                                     <x-ui.button variant="destructive" size="sm" type="submit">Delete</x-ui.button>
