@@ -69,37 +69,6 @@
         </x-ui.card>
 
         {{-- Pie Chart: Produk Paling Diminati --}}
-        <!-- <x-ui.card>
-            <x-ui.card-header>
-                <x-ui.card-title class="text-lg">Produk Paling Diminati</x-ui.card-title>
-            </x-ui.card-header>
-            <x-ui.card-content>
-                <div class="flex justify-center">
-                    @if($productStats->isEmpty())
-                        <div class="flex items-center justify-center h-48 text-muted-foreground italic">
-                            belum ada data produk
-                        </div>
-                    @else
-                        <div class="w-full max-w-xs">
-                            <canvas id="productPieChart"></canvas>
-                        </div>
-                    @endif
-                </div>
-                @if($productStats->isNotEmpty())
-                    <div class="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-2">
-                        @php
-                            $productColors = ['#6366f1','#ec4899','#f59e0b','#10b981','#0ea5e9','#8b5cf6','#ef4444','#14b8a6','#f97316','#06b6d4'];
-                        @endphp
-                        @foreach($productStats as $index => $product)
-                            <div class="flex items-center gap-1.5 text-xs">
-                                <span class="inline-block w-3 h-3 rounded-full shrink-0" style="background-color: {{ $productColors[$index % count($productColors)] }};"></span>
-                                <span class="text-foreground">{{ $product['nama'] }} ({{ $product['total'] }})</span>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-            </x-ui.card-content>
-        </x-ui.card> -->
         <x-ui.card>
             <x-ui.card-header>
                 <x-ui.card-title class="text-lg">Produk Paling Diminati</x-ui.card-title>
