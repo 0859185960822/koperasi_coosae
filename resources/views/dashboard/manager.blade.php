@@ -5,7 +5,7 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <x-ui.card>
             <x-ui.card-header class="flex flex-row items-center justify-between space-y-0 pb-2">
-                <x-ui.card-title class="text-sm font-medium">Total Sales</x-ui.card-title>
+                <x-ui.card-title class="text-sm font-medium">Total Marketing</x-ui.card-title>
             </x-ui.card-header>
             <x-ui.card-content>
                 <div class="text-2xl font-bold text-center">{{ $totalSales }}</div>
@@ -37,14 +37,14 @@
         </x-ui.card>
     </div>
 
-    {{-- Top 5 Sales (full-width, moved here from grid) --}}
+    {{-- Top 5 Sales --}}
     <x-ui.card class="mb-6">
         <x-ui.card-header>
-            <x-ui.card-title class="text-lg">Top 5 Sales dengan Kinerja Terbaik</x-ui.card-title>
+            <x-ui.card-title class="text-lg">Top 5 Marketing dengan Kinerja Terbaik</x-ui.card-title>
         </x-ui.card-header>
         <x-ui.card-content>
-            <canvas id="topSalesChart"></canvas>
-            <p class="text-xs text-muted-foreground mt-4 text-center">Berdasarkan jumlah customer berstatus Aktif</p>
+                <canvas id="topSalesChart"></canvas>
+                <p class="text-xs text-muted-foreground mt-4 text-center">Berdasarkan jumlah customer berstatus Aktif</p>
         </x-ui.card-content>
     </x-ui.card>
 
