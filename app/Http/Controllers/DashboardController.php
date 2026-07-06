@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Followup;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -22,8 +23,29 @@ class DashboardController extends Controller
         // Data for map (sebaran customer berdasarkan lokasi)
         $customers = $user->customers()->select('nama', 'lokasi', 'status')->get();
 
+        // Produk paling diminati oleh customer yang ditangani user ini
+        $productStats = $user->customers()
+            ->select('product_id', DB::raw('COUNT(*) as total'))
+            ->groupBy('product_id')
+            ->with('product:id,nama')
+            ->get()
+            ->map(fn($item) => [
+                'nama' => $item->product->nama ?? 'Tidak Diketahui',
+                'total' => $item->total,
+            ]);
+
+        // Follow-up progress (30 hari terakhir)
+        $thirtyDaysAgo = Carbon::now()->subDays(30);
+        $totalCustomers = $user->customers()->count();
+        $followedUp = $user->customers()
+            ->whereNotNull('last_followup_at')
+            ->where('last_followup_at', '>=', $thirtyDaysAgo)
+            ->count();
+        $notFollowedUp = $totalCustomers - $followedUp;
+
         return view('dashboard.marketing', compact(
-            'totalProspek', 'totalNegosiasi', 'totalCustomerAktif', 'customers'
+            'totalProspek', 'totalNegosiasi', 'totalCustomerAktif', 'customers',
+            'productStats', 'totalCustomers', 'followedUp', 'notFollowedUp'
         ));
     }
 
@@ -46,8 +68,18 @@ class DashboardController extends Controller
         // Data for map (sebaran customer keseluruhan)
         $customers = Customer::select('nama', 'lokasi', 'status')->get();
 
+        // Produk paling diminati oleh seluruh customer
+        $productStats = Customer::select('product_id', DB::raw('COUNT(*) as total'))
+            ->groupBy('product_id')
+            ->with('product:id,nama')
+            ->get()
+            ->map(fn($item) => [
+                'nama' => $item->product->nama ?? 'Tidak Diketahui',
+                'total' => $item->total,
+            ]);
+
         return view('dashboard.manager', compact(
-            'totalSales', 'totalProspek', 'totalNegosiasi', 'totalCustomerAktif', 'topSales', 'customers'
+            'totalSales', 'totalProspek', 'totalNegosiasi', 'totalCustomerAktif', 'topSales', 'customers', 'productStats'
         ));
     }
 

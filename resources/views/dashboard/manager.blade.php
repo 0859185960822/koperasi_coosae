@@ -37,8 +37,20 @@
         </x-ui.card>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {{-- Bar Chart: Prospek per Waktu --}}
+    {{-- Top 5 Sales (full-width, moved here from grid) --}}
+    <x-ui.card class="mb-6">
+        <x-ui.card-header>
+            <x-ui.card-title class="text-lg">Top 5 Sales dengan Kinerja Terbaik</x-ui.card-title>
+        </x-ui.card-header>
+        <x-ui.card-content>
+            <canvas id="topSalesChart"></canvas>
+            <p class="text-xs text-muted-foreground mt-4 text-center">Berdasarkan jumlah customer berstatus Aktif</p>
+        </x-ui.card-content>
+    </x-ui.card>
+
+    {{-- Status Chart & Product Popularity --}}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {{-- Line Chart: Status Seluruh Customer --}}
         <x-ui.card>
             <x-ui.card-header>
                 <x-ui.card-title class="text-lg">Status Seluruh Customer</x-ui.card-title>
@@ -56,20 +68,42 @@
             </x-ui.card-content>
         </x-ui.card>
 
-        {{-- Bar Chart: Top 5 Sales --}}
+        {{-- Pie Chart: Produk Paling Diminati --}}
         <x-ui.card>
             <x-ui.card-header>
-                <x-ui.card-title class="text-lg">Top 5 Sales dengan Kinerja Terbaik</x-ui.card-title>
+                <x-ui.card-title class="text-lg">Produk Paling Diminati</x-ui.card-title>
             </x-ui.card-header>
             <x-ui.card-content>
-                <canvas id="topSalesChart"></canvas>
-                <p class="text-xs text-muted-foreground mt-4 text-center">Berdasarkan jumlah customer berstatus Aktif</p>
+                <div class="flex justify-center">
+                    @if($productStats->isEmpty())
+                        <div class="flex items-center justify-center h-48 text-muted-foreground italic">
+                            belum ada data produk
+                        </div>
+                    @else
+                        <div class="w-full max-w-xs">
+                            <canvas id="productPieChart"></canvas>
+                        </div>
+                    @endif
+                </div>
+                @if($productStats->isNotEmpty())
+                    <div class="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-2">
+                        @php
+                            $productColors = ['#6366f1','#ec4899','#f59e0b','#10b981','#0ea5e9','#8b5cf6','#ef4444','#14b8a6','#f97316','#06b6d4'];
+                        @endphp
+                        @foreach($productStats as $index => $product)
+                            <div class="flex items-center gap-1.5 text-xs">
+                                <span class="inline-block w-3 h-3 rounded-full shrink-0" style="background-color: {{ $productColors[$index % count($productColors)] }};"></span>
+                                <span class="text-foreground">{{ $product['nama'] }} ({{ $product['total'] }})</span>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </x-ui.card-content>
         </x-ui.card>
     </div>
 
     {{-- Map --}}
-    <x-ui.card class="mt-6">
+    <x-ui.card>
         <x-ui.card-header>
             <x-ui.card-title class="text-lg">Sebaran Seluruh Customer berdasarkan Wilayah</x-ui.card-title>
         </x-ui.card-header>
@@ -81,6 +115,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Top 5 Sales Chart
         const topSales = @json($topSales);
         const topLabels = topSales.map(s => s.name);
         const topData = topSales.map(s => s.aktif_count);
@@ -99,9 +134,33 @@
             options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
         });
 
-        // let prospekChart;
+        // Product Pie Chart
+        const productCanvas = document.getElementById('productPieChart');
+        if (productCanvas) {
+            const productColors = ['#6366f1','#ec4899','#f59e0b','#10b981','#0ea5e9','#8b5cf6','#ef4444','#14b8a6','#f97316','#06b6d4'];
+            const productData = @json($productStats);
+            const productCtx = productCanvas.getContext('2d');
+            new Chart(productCtx, {
+                type: 'pie',
+                data: {
+                    labels: productData.map(p => p.nama),
+                    datasets: [{
+                        data: productData.map(p => p.total),
+                        backgroundColor: productData.map((_, i) => productColors[i % productColors.length]),
+                        borderWidth: 0,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Status Chart (Line)
         let statusChart;
-        // function loadProspekChart() 
         function loadStatusChart()
         {
             const start = document.getElementById('startDate').value;
@@ -109,22 +168,8 @@
             fetch(`{{ route('manager.api.prospek-chart') }}?start=${start}&end=${end}`)
                 .then(r => r.json())
                 .then(data => {
-                    // Extract unique labels (bulan)
-                    // const labels = [...new Set(data.map(d => d.bulan))].sort();
                     const labels = [...new Set(data.map(d => d.bulan))];
                     
-                    // const prospekData = labels.map(label => {
-                    //     const row = data.find(d => d.bulan === label && d.status === 'Prospek Customer');
-                    //     return row ? row.total : 0;
-                    // });
-                    // const negosiasiData = labels.map(label => {
-                    //     const row = data.find(d => d.bulan === label && d.status === 'Negosiasi');
-                    //     return row ? row.total : 0;
-                    // });
-                    // const aktifData = labels.map(label => {
-                    //     const row = data.find(d => d.bulan === label && d.status === 'Customer Aktif');
-                    //     return row ? row.total : 0;
-                    // });
                     const grouped = {};
                         data.forEach(item => {
                             if (!grouped[item.status]) {
@@ -142,8 +187,6 @@
                             grouped["Customer Aktif"]?.[label] ?? 0
                         );
 
-                    // if (prospekChart) prospekChart.destroy();
-                    // prospekChart = new Chart(document.getElementById('prospekChart').getContext('2d'), 
                     if (statusChart) statusChart.destroy();
                     statusChart = new Chart(document.getElementById('prospekChart').getContext('2d'),
                     {
@@ -174,16 +217,14 @@
                                 }
                             ]
                         },
-                        // options: { responsive: true, plugins: { legend: { display: true, position: 'bottom' } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
                         options: {responsive: true,interaction: {mode: 'index',intersect: false},plugins: {legend: {position: 'bottom'}},scales: {y: {beginAtZero: true,ticks: {stepSize: 1}}}}
                     });
                 });
         }
-        // loadProspekChart();
         loadStatusChart();
-        // document.getElementById('btnFilter').addEventListener('click', loadProspekChart);
         document.getElementById('btnFilter').addEventListener('click', loadStatusChart);
 
+        // Map
         const map = L.map('customerMap').setView([-2.5, 118], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
