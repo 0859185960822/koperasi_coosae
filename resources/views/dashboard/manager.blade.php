@@ -69,7 +69,7 @@
         </x-ui.card>
 
         {{-- Pie Chart: Produk Paling Diminati --}}
-        <x-ui.card>
+        <!-- <x-ui.card>
             <x-ui.card-header>
                 <x-ui.card-title class="text-lg">Produk Paling Diminati</x-ui.card-title>
             </x-ui.card-header>
@@ -98,6 +98,24 @@
                         @endforeach
                     </div>
                 @endif
+            </x-ui.card-content>
+        </x-ui.card> -->
+        <x-ui.card>
+            <x-ui.card-header>
+                <x-ui.card-title class="text-lg">Produk Paling Diminati</x-ui.card-title>
+            </x-ui.card-header>
+            <x-ui.card-content>
+                <div class="flex justify-center">
+                    @if($productStats->isEmpty())
+                        <div class="flex items-center justify-center h-48 text-muted-foreground italic">
+                            belum ada data produk
+                        </div>
+                    @else
+                        <div class="w-full max-w-xs">
+                            <canvas id="productPieChart"></canvas>
+                        </div>
+                    @endif
+                </div>
             </x-ui.card-content>
         </x-ui.card>
     </div>
@@ -150,12 +168,7 @@
                         borderWidth: 0,
                     }]
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { display: false }
-                    }
-                }
+                options: {responsive: true}
             });
         }
 
