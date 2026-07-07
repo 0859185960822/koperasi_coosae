@@ -14,6 +14,9 @@ class Customer extends Model
 
     protected $casts = [
         'last_followup_at' => 'datetime',
+        // jika suatu saat ada eror tipe data buka 2 baris dibawah ini
+        // 'marketing_id' => 'integer',
+        // 'product_id' => 'integer',
     ];
 
     public function marketing()
