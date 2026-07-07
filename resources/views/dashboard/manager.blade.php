@@ -118,7 +118,7 @@
                     borderRadius: 4
                 }]
             },
-            options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+            options: { responsive: true, indexAxis: 'x', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
         });
 
         // Product Pie Chart
